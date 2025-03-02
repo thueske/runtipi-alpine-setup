@@ -1,6 +1,6 @@
 # Homeserver mit [Alpine](https://alpinelinux.org/) und [Runtipi](https://runtipi.io/)
 
-![Lenovo M720q Mini-PC](https://p1-ofp.static.pub/medias/bWFzdGVyfHJvb3R8MTI2NjgxfGltYWdlL3BuZ3xoYjcvaDNlLzk3NDg1MTYzMDY5NzQucG5nfDcwMzcyMDgyZWFmN2E4OWQ1M2IxODRjMDY5YTRhMmI2Mzc5NWI3ZDZmMGFkZTFhM2ZhNTkxZTZjNzVhM2VjMmQ/ww-desktops-thinkcentre-m720q-hero-image.png)
+![Lenovo M720q Mini-PC mit Runtipi]([https://p1-ofp.static.pub/medias/bWFzdGVyfHJvb3R8MTI2NjgxfGltYWdlL3BuZ3xoYjcvaDNlLzk3NDg1MTYzMDY5NzQucG5nfDcwMzcyMDgyZWFmN2E4OWQ1M2IxODRjMDY5YTRhMmI2Mzc5NWI3ZDZmMGFkZTFhM2ZhNTkxZTZjNzVhM2VjMmQ/ww-desktops-thinkcentre-m720q-hero-image.png](https://i.postimg.cc/BbS42s2p/header.png))
 
 ## Voraussetzungen
 
