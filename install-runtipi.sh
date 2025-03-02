@@ -92,6 +92,7 @@ log "runtipi wurde erfolgreich installiert und gestartet."
 # Update settings.json und Neustart von runtipi
 # ----------------------------
 
+# Variablen für settings.json und Repo-URLs
 SETTINGS_FILE="/root/runtipi/state/settings.json"
 NEW_APPS_REPO="https://github.com/thueske/runtipi-appstore"
 OLD_APPS_REPO="https://github.com/runtipi/runtipi-appstore"
@@ -103,12 +104,6 @@ if ! command -v jq >/dev/null 2>&1; then
   log "Fehler: jq ist nicht installiert. Bitte installieren Sie jq (z.B. apk add jq)."
   exit 1
 fi
-
-SETTINGS_FILE="/root/runtipi/state/settings.json"
-NEW_APPS_REPO="https://github.com/thueske/runtipi-appstore"
-OLD_APPS_REPO="https://github.com/runtipi/runtipi-appstore"
-
-log "Prüfe settings.json auf appsRepoUrl..."
 
 # Falls settings.json nicht existiert, lege sie mit default {} an
 if [ ! -f "$SETTINGS_FILE" ]; then
