@@ -166,7 +166,7 @@ current_cron=$(crontab -l 2>/dev/null | grep -v "$CRON_PATH/autoupgrade.sh" | gr
   echo "$current_cron"
   cat <<EOF
 0 0 * * * $CRON_PATH/autoupgrade.sh
-0 1 * * * $CRON_PATH/autorebootifnewkernel.sh
+0 8 * * 1 [ "\$(date +\%d)" -le 07 ] && $CRON_PATH/autorebootifnewkernel.sh
 EOF
 ) | crontab -
 log "Cronjobs wurden eingerichtet."
