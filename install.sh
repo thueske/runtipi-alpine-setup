@@ -156,4 +156,27 @@ else
   log ".zshrc nicht gefunden, überspringe Plugin-Aktivierung."
 fi
 
+# Cronjobs einrichten
+log "Installiere Cronjobs..."
+CRON_PATH="$PWD/cronjobs"
+(
+  crontab -l 2>/dev/null
+  cat <<EOF
+0 0 * * * $CRON_PATH/autoupgrade.sh
+0 1 * * * $CRON_PATH/autorebootifnewkernel.sh
+EOF
+) | crontab -
+log "Cronjobs wurden eingerichtet."
+
 log "Setup abgeschlossen."
+
+# Neustart-Abfrage
+printf "\nMöchtest du das System neu starten? [Y/n] "
+read answer
+# Bei leerer Eingabe oder Y/y wird ein Neustart durchgeführt
+if [ -z "$answer" ] || [ "$answer" = "Y" ] || [ "$answer" = "y" ]; then
+  log "Neustart wird durchgeführt..."
+  reboot
+else
+  log "Neustart abgebrochen."
+fi
