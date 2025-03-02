@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 CURRENT_KERNEL=$(uname -r)
 INSTALLED_KERNEL=$(ls /lib/modules/ | sort -V | tail -n 1)
