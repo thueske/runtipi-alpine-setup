@@ -10,6 +10,7 @@ Erstelle einen Homeserver mit Alpine Linux (inkl. automatische, tägliche Update
 - USB-Stick mit min. 8GB Speicherplatz
 - RJ45-Netzwerkkabel zum Anschluss am Router
 - Account bei [Healthchecks.io](https://healthchecks.io/)
+- SFTP-Server für Backups
 
 ## Boot-Medium erstellen
 
