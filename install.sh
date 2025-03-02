@@ -156,11 +156,14 @@ else
   log ".zshrc nicht gefunden, überspringe Plugin-Aktivierung."
 fi
 
-# Cronjobs einrichten
+# Cronjobs einrichten, ohne Duplikate hinzuzufügen
 log "Installiere Cronjobs..."
 CRON_PATH="$PWD/cronjobs"
+# Bestehende Cronjobs entfernen, die auf die beiden Skripte verweisen
+current_cron=$(crontab -l 2>/dev/null | grep -v "$CRON_PATH/autoupgrade.sh" | grep -v "$CRON_PATH/autorebootifnewkernel.sh")
+# Die gewünschten Cronjobs hinzufügen
 (
-  crontab -l 2>/dev/null
+  echo "$current_cron"
   cat <<EOF
 0 0 * * * $CRON_PATH/autoupgrade.sh
 0 1 * * * $CRON_PATH/autorebootifnewkernel.sh
