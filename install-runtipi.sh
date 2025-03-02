@@ -3,6 +3,12 @@ set -e
 set -u
 set -o pipefail
 
+# Dieses Skript MUSS als Root ausgeführt werden
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Dieses Skript muss als Root ausgeführt werden." >&2
+  exit 1
+fi
+
 # ANSI-Farben: Bold und Grün
 BOLD_GREEN='\033[1;32m'
 NC='\033[0m'  # Kein Farbcode
@@ -14,7 +20,7 @@ log() {
 
 log "Starte install-runtipi.sh..."
 
-# Architektur ermitteln
+# Architektur ermitteln und passendes Asset wählen
 ARCHITECTURE="$(uname -m)"
 case "$ARCHITECTURE" in
   armv7*|i686|i386)
@@ -52,19 +58,32 @@ curl --location "$URL" -o runtipi-cli.tar.gz
 log "Entpacke runtipi-cli.tar.gz..."
 tar -xzf runtipi-cli.tar.gz
 
-# Den extrahierten Ordner ermitteln (erster Eintrag im Tar-Archiv)
-EXTRACTED_DIR="$(tar -tzf runtipi-cli.tar.gz | head -n 1 | cut -d "/" -f1)"
-if [ -d "$EXTRACTED_DIR" ]; then
-  mv "$EXTRACTED_DIR" runtipi-cli
+# Ermitteln des ersten Eintrags im Archiv, der den Namen des extrahierten Ordners oder der Datei enthält
+EXTRACTED_NAME="$(tar -tzf runtipi-cli.tar.gz | head -n 1 | cut -d "/" -f1)"
+rm -f runtipi-cli.tar.gz
+
+# Falls ein Verzeichnis extrahiert wurde, verwenden wir den darin enthaltenen Binary,
+# andernfalls nehmen wir den extrahierten Dateinamen direkt.
+if [ -d "$EXTRACTED_NAME" ]; then
+  log "Extrahiertes Verzeichnis ${EXTRACTED_NAME} gefunden."
+  # Setze den Pfad zum Binary; wir erwarten, dass sich die ausführbare Datei im Verzeichnis "runtipi-cli" befindet.
+  if [ -f "$EXTRACTED_NAME/runtipi-cli" ]; then
+    BIN_PATH="$INSTALL_DIR/$EXTRACTED_NAME/runtipi-cli"
+  else
+    log "Fehler: In ${EXTRACTED_NAME} wurde keine ausführbare Datei 'runtipi-cli' gefunden."
+    exit 1
+  fi
+  # Umbenennen des Verzeichnisses, falls gewünscht:
+  mv "$EXTRACTED_NAME" runtipi-cli
+  BIN_PATH="$INSTALL_DIR/runtipi-cli/runtipi-cli"
 else
-  # Falls kein Verzeichnis, dann handelt es sich um die ausführbare Datei direkt
-  mv runtipi-cli.tar.gz runtipi-cli
+  log "Extrahierte Datei ${EXTRACTED_NAME} gefunden."
+  BIN_PATH="$INSTALL_DIR/$EXTRACTED_NAME"
 fi
 
-rm -f runtipi-cli.tar.gz
-chmod +x runtipi-cli
+chmod +x "$BIN_PATH"
 
 log "Starte runtipi..."
-./runtipi-cli start
+"$BIN_PATH" start
 
 log "runtipi wurde erfolgreich installiert und gestartet."
