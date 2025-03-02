@@ -1,5 +1,7 @@
 # Homeserver mit [Alpine](https://alpinelinux.org/) und [Runtipi](https://runtipi.io/)
 
+![Lenovo M720q Mini-PC](https://p1-ofp.static.pub/medias/bWFzdGVyfHJvb3R8MTI2NjgxfGltYWdlL3BuZ3xoYjcvaDNlLzk3NDg1MTYzMDY5NzQucG5nfDcwMzcyMDgyZWFmN2E4OWQ1M2IxODRjMDY5YTRhMmI2Mzc5NWI3ZDZmMGFkZTFhM2ZhNTkxZTZjNzVhM2VjMmQ/ww-desktops-thinkcentre-m720q-hero-image.png)
+
 ## Voraussetzungen
 
 - (refurbished) [Mini-PC](https://www.mydealz.de/gruppe/mini-pc) mit min. 8GB Arbeitsspeicher und min. 128GB SSD
@@ -12,9 +14,9 @@
 - Mit dem Tool [BalenaEtcher](https://etcher.balena.io/) die zuvor heruntergeladene Datei auf den USB-Stick flashen
 - Anschließend den bootfähigen USB-Stick an den Mini-PC anschließen und von diesem (aus dem BIOS heraus) booten
 
-![Alpine Linux USB-Installer](https://linuxiac.b-cdn.net/wp-content/uploads/2023/05/alpine-install1.png)
-
 ## Alpine Linux installieren
+
+![Alpine Linux USB-Installer](https://linuxiac.b-cdn.net/wp-content/uploads/2023/05/alpine-install1.png)
 
 - Login im zuvor gezeigten Screen mit dem Nutzernamen `root`
 - Befehl `setup-alpine` ausführen, um den Installations-Wizard zu starten
