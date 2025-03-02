@@ -87,3 +87,44 @@ log "Starte runtipi..."
 "$BIN_PATH" start
 
 log "runtipi wurde erfolgreich installiert und gestartet."
+
+# ----------------------------
+# Update settings.json und Neustart von runtipi
+# ----------------------------
+
+SETTINGS_FILE="/root/runtipi/state/settings.json"
+NEW_APPS_REPO="https://github.com/thueske/runtipi-appstore"
+OLD_APPS_REPO="https://github.com/runtipi/runtipi-appstore"
+
+log "Prüfe settings.json auf appsRepoUrl..."
+
+# Prüfe, ob jq installiert ist, ansonsten abbrechen
+if ! command -v jq >/dev/null 2>&1; then
+  log "Fehler: jq ist nicht installiert. Bitte installieren Sie jq (z.B. apk add jq)."
+  exit 1
+fi
+
+if [ -f "$SETTINGS_FILE" ]; then
+  CURRENT=$(jq -r '.appsRepoUrl // empty' "$SETTINGS_FILE")
+  if [ -z "$CURRENT" ] || [ "$CURRENT" = "$OLD_APPS_REPO" ]; then
+    log "appsRepoUrl ist leer oder entspricht ${OLD_APPS_REPO}. Aktualisiere auf ${NEW_APPS_REPO}..."
+    jq --arg newRepo "$NEW_APPS_REPO" '.appsRepoUrl = $newRepo' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" \
+      && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+    log "Einstellung in settings.json aktualisiert."
+  else
+    log "appsRepoUrl ($CURRENT) benötigt keine Änderung."
+  fi
+else
+  log "settings.json wurde nicht gefunden unter ${SETTINGS_FILE}. Überspringe Update."
+fi
+
+# Neustart von runtipi veranlassen
+RUNTIPI_BIN="/opt/runtipi/runtipi-cli/runtipi-cli"
+if [ -x "$RUNTIPI_BIN" ]; then
+  log "Starte runtipi neu..."
+  "$RUNTIPI_BIN" restart
+  log "runtipi wurde neu gestartet."
+else
+  log "Fehler: runtipi-Binary nicht gefunden oder nicht ausführbar unter ${RUNTIPI_BIN}."
+  exit 1
+fi
