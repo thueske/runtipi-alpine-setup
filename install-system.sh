@@ -18,7 +18,7 @@ https://dl-cdn.alpinelinux.org/alpine/latest-stable/community/
 EOF
 
 log "Installiere Pakete..."
-apk --update --no-cache add zip git zsh curl htop docker docker-cli-compose doas bash rsync iftop tailscale logrotate
+apk --update --no-cache add zip git zsh curl htop docker docker-cli-compose doas bash rsync iftop tailscale logrotate jq
 
 # Lade das tun-Modul nur, wenn es noch nicht geladen ist
 log "Lade das tun-Modul..."
