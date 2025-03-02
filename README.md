@@ -1,6 +1,6 @@
 # Homeserver mit [Alpine](https://alpinelinux.org/) und [Runtipi](https://runtipi.io/)
 
-![Lenovo M720q Mini-PC](https://i.postimg.cc/BbS42s2p/header.png)
+![Lenovo M720q Mini-PC](https://i.imgur.com/EzA5OuB.png)
 
 ## Voraussetzungen
 
