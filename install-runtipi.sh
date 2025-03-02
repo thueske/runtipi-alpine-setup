@@ -104,22 +104,29 @@ if ! command -v jq >/dev/null 2>&1; then
   exit 1
 fi
 
-if [ -f "$SETTINGS_FILE" ]; then
-  CURRENT=$(jq -r '.appsRepoUrl // empty' "$SETTINGS_FILE")
-  if [ -z "$CURRENT" ] || [ "$CURRENT" = "$OLD_APPS_REPO" ]; then
-    log "appsRepoUrl ist leer oder entspricht ${OLD_APPS_REPO}. Aktualisiere auf ${NEW_APPS_REPO}..."
-    jq --arg newRepo "$NEW_APPS_REPO" '.appsRepoUrl = $newRepo' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" \
-      && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
-    log "Einstellung in settings.json aktualisiert."
-  else
-    log "appsRepoUrl ($CURRENT) benötigt keine Änderung."
-  fi
+SETTINGS_FILE="/root/runtipi/state/settings.json"
+NEW_APPS_REPO="https://github.com/thueske/runtipi-appstore"
+OLD_APPS_REPO="https://github.com/runtipi/runtipi-appstore"
+
+log "Prüfe settings.json auf appsRepoUrl..."
+
+# Falls settings.json nicht existiert, lege sie mit default {} an
+if [ ! -f "$SETTINGS_FILE" ]; then
+  log "settings.json nicht gefunden unter ${SETTINGS_FILE}. Erstelle default settings.json mit {}."
+  echo "{}" > "$SETTINGS_FILE"
+fi
+
+CURRENT=$(jq -r '.appsRepoUrl // empty' "$SETTINGS_FILE")
+if [ -z "$CURRENT" ] || [ "$CURRENT" = "$OLD_APPS_REPO" ]; then
+  log "appsRepoUrl ist leer oder entspricht ${OLD_APPS_REPO}. Aktualisiere auf ${NEW_APPS_REPO}..."
+  jq --arg newRepo "$NEW_APPS_REPO" '.appsRepoUrl = $newRepo' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+  log "Einstellung in settings.json aktualisiert."
 else
-  log "settings.json wurde nicht gefunden unter ${SETTINGS_FILE}. Überspringe Update."
+  log "appsRepoUrl ($CURRENT) benötigt keine Änderung."
 fi
 
 # Neustart von runtipi veranlassen
-RUNTIPI_BIN="/opt/runtipi/runtipi-cli/runtipi-cli"
+RUNTIPI_BIN="/root/runtipi/runtipi-cli"
 if [ -x "$RUNTIPI_BIN" ]; then
   log "Starte runtipi neu..."
   "$RUNTIPI_BIN" restart
