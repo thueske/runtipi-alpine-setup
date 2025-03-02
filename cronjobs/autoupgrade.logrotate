@@ -1,8 +1,14 @@
 /var/log/autoupgrade.log {
-    weekly               # Log wöchentlich rotieren
-    rotate 4             # 4 alte Versionen behalten
-    compress             # Alte Logs komprimieren
-    missingok            # Fehler ignorieren, wenn Log fehlt
-    notifempty           # Nicht rotieren, wenn Log leer ist
-    create 0640 root root # Neue Log-Datei mit den angegebenen Rechten erstellen
+    # Log wöchentlich rotieren
+    weekly
+    # 4 alte Versionen behalten
+    rotate 4
+    # Alte Logs komprimieren
+    compress
+    # Fehler ignorieren, wenn Log fehlt
+    missingok
+    # Nicht rotieren, wenn Log leer ist
+    notifempty
+    # Neue Log-Datei mit den angegebenen Rechten erstellen
+    create 0640 root root
 }
