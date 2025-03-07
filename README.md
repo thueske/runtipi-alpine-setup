@@ -105,6 +105,7 @@ ssh-key-generator-1  | ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+Abj8mDZH90PbPimcC/
 Natürlich ist das nur der Anfang und du kannst noch viel mehr machen. Ließ dich doch mal in folgende Themen ein:
 
 - Installiere dir Apps aus dem App-Store - nicht das passende dabei? Nimm die App `Portainer` und starte eigene Docker-Container 
+- Entschlüsselung von PDF-Dateien in Paperless? Schau [hier](https://github.com/thueske/runtipi-alpine-setup/blob/main/configure-paperless.sh) vorbei
 - SSH-Key statt Passwort-Authentifizierung per SSH
 - Domain und HTTPS in Runtipi einrichten
 - Tailscale für sicheren Remote-Zugriff nutzen (Agent bereits über [install-system.sh](https://github.com/thueske/runtipi-alpine-setup/blob/main/install-system.sh) auf dem Host installiert, allerdings nicht konfiguriert)
