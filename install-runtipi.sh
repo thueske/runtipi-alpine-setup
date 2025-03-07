@@ -120,6 +120,14 @@ else
   log "appsRepoUrl ($CURRENT) benötigt keine Änderung."
 fi
 
+# ----------------------------
+# Git-Repo klonen
+# ----------------------------
+log "Klonen des Repositories 'runtipi-paperless-user-config'..."
+git clone https://github.com/thueske/runtipi-paperless-user-config.git /root/runtipi/user-config
+
+log "Repository wurde erfolgreich geklont."
+
 # Neustart von runtipi veranlassen
 RUNTIPI_BIN="/root/runtipi/runtipi-cli"
 if [ -x "$RUNTIPI_BIN" ]; then
